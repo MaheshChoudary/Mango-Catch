@@ -1,90 +1,98 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Chess World</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
 <style>
-:root{--bg:#fff8ec;--fg:#2a2140;--card:#fff;--ac:#7c4dff;--ac2:#ff7043;--l:#f0d9b5;--d:#b58863;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17132a;--fg:#f3efff;--card:#241d42}}
-:root[data-theme="dark"]{--bg:#17132a;--fg:#f3efff;--card:#241d42}
+:root{--bg:#faf6ec;--fg:#1d2433;--card:#fff;--pri:#14213d;--prt:#faf6ec;--gold:#b8933f;--gr:#4f7f5a;--mut:#6b7080;--bd:#e3dac3;--l:#f0d9b5;--d:#b58863;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1726;--fg:#f1ede2;--card:#18233a;--pri:#d9b862;--prt:#14213d;--gold:#d9b862;--gr:#7fb08a;--mut:#9aa3b8;--bd:#2a3752}}
+:root[data-theme="dark"]{--bg:#0f1726;--fg:#f1ede2;--card:#18233a;--pri:#d9b862;--prt:#14213d;--gold:#d9b862;--gr:#7fb08a;--mut:#9aa3b8;--bd:#2a3752}
 *{box-sizing:border-box}[hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
-header{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 14px;background:var(--ac);color:#fff}
-.logo{font-weight:800;letter-spacing:.5px;font-size:1.15rem}#nav{display:flex;flex-wrap:wrap;gap:6px;flex:1}
-#nav button{background:#ffffff26;color:#fff;border:0;border-radius:20px;padding:6px 12px;font-weight:600;cursor:pointer}#nav button.on{background:#fff;color:var(--ac)}
-#hud{font-weight:700;background:#0003;padding:4px 10px;border-radius:14px}
-main{max-width:980px;margin:auto;padding:14px}
-h1{font-size:clamp(1.7rem,6vw,2.6rem);margin:.2em 0}h2{margin:1em 0 .4em}
-.hero{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center}.hero>div{flex:1 1 300px}
-button.b{background:var(--ac2);color:#fff;border:0;border-radius:24px;padding:10px 18px;font-weight:700;font-size:1rem;cursor:pointer;margin:4px 6px 4px 0}button.b.alt{background:var(--ac)}
-button.s{background:var(--card);color:var(--fg);border:2px solid var(--ac);border-radius:14px;padding:6px 12px;font-weight:600;cursor:pointer}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.card{background:var(--card);border-radius:16px;padding:12px;box-shadow:0 2px 8px #0002;cursor:pointer;display:flex;flex-direction:column;gap:2px}
-.card small{opacity:.75}.card.lock{opacity:.55}.card.soon{opacity:.6;cursor:default}.em{font-size:2rem}
-.board{width:min(92vw,480px);aspect-ratio:1;display:grid;grid-template-columns:repeat(8,1fr);border:4px solid var(--fg);border-radius:8px;overflow:hidden;margin:8px auto;font-size:min(9vw,46px)}
-.board.sm{width:min(80vw,340px);font-size:min(7.5vw,32px)}
-.sq{position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;line-height:1}
-.l{background:var(--l)}.d{background:var(--d)}
-.last{background-image:linear-gradient(#ffe60066,#ffe60066)}.sel{box-shadow:inset 0 0 0 4px #ffd54a}
-.chk{background-image:radial-gradient(#f33,transparent 75%)}
-.tg::after{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:#0004}
-.star::before{content:"⭐";position:absolute;font-size:.55em;opacity:.9}
-.pc.w{color:#fff;text-shadow:0 0 3px #000,0 0 3px #000,0 1px 1px #000}.pc.b{color:#1a1a1a;text-shadow:0 0 2px #fff8}
-.coach{background:var(--card);border-left:6px solid var(--ac);border-radius:12px;padding:10px 12px;margin:8px auto;max-width:480px;min-height:48px}
-.row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0}
-.mv{max-width:480px;margin:6px auto;font-size:.85rem;opacity:.8;word-break:break-word}
-.node{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:40px;padding:10px 18px;margin:10px 0;max-width:420px;box-shadow:0 2px 8px #0002;cursor:pointer;border:3px solid var(--ac)}
-.node.lock{opacity:.5;border-color:#999;cursor:default}.node.done{border-color:#2e9e57}.node small{display:block;opacity:.75}
-.bar{height:14px;background:#0002;border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac2)}
-.tc{padding:8px 14px;border-radius:12px;border:3px solid transparent;cursor:pointer;font-weight:600}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3,.brand{font-family:Georgia,"Times New Roman",serif;margin:0 0 .4em}h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.1}h2{font-size:1.5rem;margin-top:1.6em}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--card);border-bottom:1px solid var(--bd);flex-wrap:wrap}
+#back{background:none;border:1px solid var(--bd);color:var(--fg);border-radius:10px;padding:6px 12px;font-weight:600;cursor:pointer}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:1.15rem;letter-spacing:.5px;cursor:pointer}.lg{width:32px;height:32px}
+#nav{display:flex;gap:4px;flex:1;flex-wrap:wrap;justify-content:center}
+#nav button{background:none;border:0;color:var(--mut);padding:6px 12px;border-radius:8px;font-weight:600;cursor:pointer}#nav button.on{background:var(--pri);color:var(--prt)}
+#hud{font-size:.85rem;color:var(--mut);font-weight:600}#tm{background:none;border:1px solid var(--bd);border-radius:50%;width:34px;height:34px;color:var(--fg);cursor:pointer}
+main{max-width:1000px;margin:auto;padding:16px}
+button.b{background:var(--pri);color:var(--prt);border:0;border-radius:10px;padding:11px 22px;font-weight:700;font-size:1rem;cursor:pointer;margin:4px 8px 4px 0}button.b.o{background:none;color:var(--fg);border:2px solid var(--pri)}
+button.s{background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:8px;padding:7px 13px;font-weight:600;cursor:pointer}button.s.on{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold)}
+button.lk{background:none;border:0;color:var(--gold);text-decoration:underline;cursor:pointer;font:inherit;padding:0 4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:3px;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 14px #0002}.card small,.mut{color:var(--mut)}.card.lock{opacity:.5;cursor:default}.em{font-size:2rem;line-height:1.2}
+.badge{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--bd);color:var(--fg);width:max-content}.badge.g{background:var(--gr);color:#fff}.badge.y{background:var(--gold);color:#fff}
+.hero{display:flex;flex-wrap:wrap;gap:24px;align-items:center;padding:14px 0}.hero>div{flex:1 1 320px}
+.board{width:max(260px,min(94vw,calc(100dvh - 260px),520px));aspect-ratio:1;display:grid;grid-template:repeat(8,minmax(0,1fr))/repeat(8,minmax(0,1fr));container-type:size;border:3px solid var(--pri);border-radius:6px;overflow:hidden;margin:8px auto}
+.board.sm{width:min(86vw,360px)}
+.sq{position:relative;aspect-ratio:1;min-width:0;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.l{background:var(--l)}.d{background:var(--d)}.pc{font-size:9.2cqw;line-height:1}
+.pc.w{color:#fff;text-shadow:0 0 2px #000,0 0 2px #000,0 1px 1px #000}.pc.b{color:#161616;text-shadow:0 0 2px #fff9}
+.rk,.fl{position:absolute;font-size:2.4cqw;font-style:normal;font-weight:700;opacity:.65;pointer-events:none}.rk{top:3%;left:5%}.fl{bottom:3%;right:5%}
+.last{background-image:linear-gradient(#f2d34f77,#f2d34f77)}.sel{box-shadow:inset 0 0 0 .6cqw #e9b824}.chk{background-image:radial-gradient(#e33,transparent 75%)}
+.tg::after{content:"";position:absolute;width:3.6cqw;height:3.6cqw;border-radius:50%;background:#0005}.star::before{content:"★";position:absolute;font-size:6cqw;color:#e9b824;text-shadow:0 0 3px #000;z-index:1;opacity:.95}
+.coach{background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--gold);border-radius:10px;padding:10px 14px;margin:8px auto;max-width:520px;min-height:48px}
+.coach.pop{animation:pop .5s}@keyframes pop{0%{transform:scale(.9);box-shadow:0 0 0 0 var(--gold)}60%{transform:scale(1.04)}100%{transform:scale(1);box-shadow:0 0 0 12px transparent}}
+.warn{max-width:520px;margin:4px auto;font-size:.9rem;color:var(--gold)}
+.row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}.mv{max-width:520px;margin:6px auto;font-size:.85rem;color:var(--mut)}
+.bar{height:10px;background:var(--bd);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--gr)}
+.lv{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:520px;margin:10px 0}
+.lb{aspect-ratio:1;border-radius:12px;border:2px solid var(--bd);background:var(--card);color:var(--fg);font:700 1.2rem Georgia,serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.lb small{font:.65rem system-ui;color:var(--gold)}.lb.done{border-color:var(--gr);background:var(--gr);color:#fff}.lb.done small{color:#fff}.lb.cur{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold)}.lb.lock{opacity:.4;cursor:default}
+.tile{padding:14px;border-radius:12px;background:var(--card);border:1px solid var(--bd)}.tile b{display:block;font:700 1.6rem Georgia,serif}.tile span{color:var(--mut);font-size:.8rem}
+.av{width:72px;height:72px;border-radius:50%;background:var(--pri);color:var(--prt);display:flex;align-items:center;justify-content:center;font:700 2rem Georgia,serif}
+.ph{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--bd)}
+input,select{background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:8px;padding:7px 10px;font:inherit}
+.dots::after{content:"";animation:d 1s steps(4) infinite}@keyframes d{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
+footer{text-align:center;color:var(--mut);padding:30px 0;font-size:.85rem}
 </style></head><body>
-<header><span class="logo">♞ CHESS WORLD</span><nav id="nav"></nav><span id="hud"></span></header>
+<header><button id="back" onclick="back()" hidden>← Back</button>
+<span class="brand" onclick="go(showHome)"><svg class="lg" viewBox="0 0 40 40"><rect width="40" height="40" rx="9" fill="var(--pri)"/><rect x="20" y="0" width="10" height="10" fill="var(--gold)" opacity=".35"/><rect x="30" y="10" width="10" height="10" fill="var(--gold)" opacity=".35"/><text x="20" y="31" font-size="27" text-anchor="middle" fill="var(--prt)">♞</text></svg>CHESS WORLD</span>
+<nav id="nav"></nav><span id="hud"></span><button id="tm" onclick="tmode()" title="Light / dark">◐</button></header>
 <main>
-<section id="home" class="v">
-<div class="hero"><div><h1>Your Chess Adventure Starts Here!</h1><p>Learn, Play, Challenge and Become a Chess Master.</p>
-<button class="b" onclick="quick()">▶ Play Now</button><button class="b alt" onclick="go('learn')">📖 Learn Chess</button><button class="b" onclick="go('play')">🤖 Play Against a Bot</button>
-<p><small><i>Every Move Begins an Adventure.</i> Try the board — it’s live!</small></p></div>
-<div><div id="hb" class="board sm"></div></div></div>
-<h2>Choose Your Adventure</h2>
-<div class="grid">
-<div class="card" onclick="go('learn')"><span class="em">🗺️</span><b>Learn from Zero</b><small>Missions on a map</small></div>
-<div class="card" onclick="quick()"><span class="em">⚡</span><b>Quick Game</b><small>Versus Baby Bot</small></div>
-<div class="card" onclick="go('play')"><span class="em">🤖</span><b>Challenge a Robot</b><small>12 personalities</small></div>
-<div class="card" onclick="go('puz')"><span class="em">🧩</span><b>Solve a Puzzle</b><small>Mate in one &amp; more</small></div>
-<div class="card soon"><span class="em">👨‍👩‍👧</span><b>Play with Friends</b><small>Coming soon</small></div>
-<div class="card soon"><span class="em">🏆</span><b>Join a Tournament</b><small>Coming soon</small></div></div>
-<h2>Today’s Challenges</h2><div class="grid" id="daily"></div>
-</section>
-<section id="learn" class="v" hidden><h2>🗺️ Adventure Map</h2><div id="map"></div>
-<div id="lesson" hidden><h2 id="lt"></h2><p id="lx"></p><div id="lb" class="board"></div><div id="lc" class="coach"></div>
-<div class="row"><button class="s" onclick="mapDraw()">🗺️ Map</button><button class="b" id="lnext" hidden onclick="nextL()">Next mission ➜</button></div></div></section>
-<section id="play" class="v" hidden><div id="bots" class="grid"></div>
-<div id="game" hidden><div class="coach" id="ptop"></div><div id="pb" class="board"></div><div id="pc" class="coach"></div>
-<div class="row"><button class="s" onclick="undo()">↩ Undo</button><button class="s" onclick="hint()">💡 Hint</button><button class="s" onclick="startBot(S.i)">↻ Restart</button><button class="s" onclick="botsDraw()">🤖 Bots</button></div><div class="mv" id="mv"></div></div></section>
-<section id="puz" class="v" hidden><div id="plist" class="grid"></div>
-<div id="pz" hidden><h2 id="pt"></h2><div id="zb" class="board"></div><div id="zc" class="coach"></div><div class="row"><button class="s" onclick="go('puz')">🧩 All puzzles</button></div></div></section>
-<section id="me" class="v" hidden><div id="prof"></div></section>
-</main>
+<section id="home" class="v"></section>
+<section id="learn" class="v" hidden><div id="acad"></div><div id="jour" hidden></div>
+<div id="les" hidden><h2 id="lt" style="margin-top:0"></h2><div class="mut" id="ls"></div><div class="bar" style="max-width:520px;margin:6px 0"><i id="lp"></i></div><p id="lx"></p><div id="lb" class="board"></div><div id="lc" class="coach"></div><div class="row"><button class="b" id="lnext" hidden onclick="nextL()">Next lesson →</button></div></div></section>
+<section id="play" class="v" hidden><div id="bots"></div>
+<div id="game" hidden><div class="coach" id="ptop"></div><div id="pb" class="board"></div><div id="pc" class="coach"></div><div id="pw" class="warn"></div>
+<div class="row"><button class="s" onclick="undo()">↩ Undo</button><button class="s" onclick="hint()">💡 Hint</button><button class="s" id="rs" onclick="resign()">🏳 Resign</button><button class="s" onclick="play(S.i,S.c)">↻ Restart</button></div><div class="mv" id="mv"></div></div></section>
+<section id="puz" class="v" hidden><div id="plist"></div>
+<div id="pz" hidden><h2 id="pt" style="margin-top:0"></h2><p id="pq"></p><div id="zb" class="board"></div><div id="zc" class="coach"></div>
+<div class="row"><button class="s" onclick="zhint()">💡 Hint</button><button class="s" onclick="zsol()">👁 Solution</button><button class="b" id="znext" hidden onclick="zNext()">Next puzzle →</button></div></div></section>
+<section id="me" class="v" hidden></section>
+<footer>♞ Chess World — Every Move Begins an Adventure. Progress is saved on this device.</footer></main>
 <script>
+const PZ=[["3k4/8/3K4/8/2Q5/8/8/8 w - - 0 1", "c4g8", "M1"],["4k3/8/4K3/8/6Q1/8/8/8 w - - 0 1", "g4g8", "M1"],["8/7k/3K4/2R5/6Q1/8/8/8 w - - 0 1", "c5h5", "M1"],["8/5K2/6Q1/8/8/N7/8/k7 w - - 0 1", "g6b1", "M1"],["1k6/5Q2/8/8/6R1/8/K7/8 w - - 0 1", "g4g8", "M1"],["7k/8/K7/5R2/8/6Q1/8/8 w - - 0 1", "f5h5", "M1"],["4k3/2R5/8/8/8/8/R7/1K6 w - - 0 1", "a2a8", "M1"],["8/8/8/8/5K1N/8/3Q4/7k w - - 0 1", "d2g2", "M1"],["6K1/8/8/k7/8/8/3R4/1R6 w - - 0 1", "d2a2", "M1"],["4B3/5K1k/8/8/6R1/8/8/8 w - - 0 1", "g4h4", "M1"],["8/8/8/8/1N6/8/4Q2K/k7 w - - 0 1", "e2a2", "M1"],["8/6Q1/8/3R4/8/7k/8/6K1 w - - 0 1", "d5h5", "M1"],["4R3/6K1/8/1Q6/8/8/k7/8 w - - 0 1", "e8a8", "M1"],["3b4/8/2Q5/8/8/8/3R4/4k2K w - - 0 1", "c6c1", "M1"],["k7/3Q4/1p6/8/8/2R2K2/8/8 w - - 0 1", "c3c8", "M1"],["2n4k/2R5/8/8/1K6/1Q5q/8/8 w - - 0 1", "b3h3", "CAP"],["8/5rK1/8/8/7P/1R3n2/8/5k2 w - - 0 1", "g7f7", "CAP"],["8/K7/8/3P4/6k1/b7/3rR3/8 w - - 0 1", "e2d2", "CAP"],["3K3N/4B3/3n4/8/5r2/8/8/7k w - - 0 1", "e7d6", "CAP"],["8/5K2/6b1/8/6Qb/6P1/8/1k6 w - - 0 1", "g4g6", "CAP"],["8/2R3Kq/8/8/3P2k1/6n1/N7/8 w - - 0 1", "g7h7", "CAP"],["8/8/n2K4/8/1NN5/5k1P/4r3/8 w - - 0 1", "b4a6", "CAP"],["8/7k/8/B7/5b2/2P5/6K1/5B1q w - - 0 1", "g2h1", "CAP"],["3r4/8/1k3N1R/8/8/Q4K1r/8/8 w - - 0 1", "h6h3", "CAP"],["5K2/3Q4/1P1q4/8/8/3n1Nk1/8/8 w - - 0 1", "d7d6", "CAP"],["3r4/N7/8/K7/8/1Pn4Q/8/2k5 w - - 0 1", "h3c3", "CAP"],["8/3k4/8/1P4N1/7p/N7/2n1K3/8 w - - 0 1", "a3c2", "CAP"],["7n/8/8/7q/N2B2k1/4K3/5Rq1/8 w - - 0 1", "f2g2", "CAP"],["8/1q3q2/6k1/4R3/3R3r/2K5/8/3Q4 w - - 0 1", "d4h4", "CAP"],["4R3/3Kr1n1/1P1P4/8/8/2k5/5b2/8 w - - 0 1", "e8e7", "CAP"],["5k2/7Q/1n6/8/8/1B4K1/8/8 w - - 0 1", "h7f7", "M1"],["8/8/8/5K1k/4B3/8/5R2/5N2 w - - 0 1", "f2h2", "M1"],["1k6/8/K2P4/8/8/2Q5/8/2n5 w - - 0 1", "c3h8", "M1"],["k7/4Q3/7r/8/5K2/1R6/8/8 w - - 0 1", "e7b7", "M1"],["8/8/6Q1/8/3K1p2/8/6R1/2k5 w - - 0 1", "g6c2", "M1"],["6R1/8/1K6/8/2B5/8/7R/2k5 w - - 0 1", "g8g1", "M1"],["k7/8/K7/8/1b6/8/8/R3R3 w - - 0 1", "e1e8", "M1"],["7n/8/6R1/6K1/k7/8/8/1R6 w - - 0 1", "g6a6", "M1"],["8/7b/5KPk/8/8/8/R7/8 w - - 0 1", "a2h2", "M1"],["8/8/1Q6/8/8/4K2p/8/4k1B1 w - - 0 1", "b6b1", "M1"],["6k1/4B3/5RK1/8/8/8/8/3N4 w - - 0 1", "f6f8", "M1"],["3k4/6Q1/4K3/8/8/8/3B4/3n4 w - - 0 1", "g7d7", "M1"],["5r1k/8/R7/6Q1/8/8/8/6K1 w - - 0 1", "a6h6", "M1"],["5Q2/8/k7/P1P2n2/1K6/8/8/8 w - - 0 1", "f8a8", "M1"],["7k/6RB/8/8/4r3/7R/2K5/8 w - - 0 1", "g7g8", "M1"],["7Q/8/7K/q7/3p4/4k3/3N4/8 w - - 0 1", "d2c4", "FORK"],["8/6q1/3k4/7n/3N4/1P6/K7/8 w - - 0 1", "d4f5", "FORK"],["7n/P7/8/1N2k3/8/8/2r5/6K1 w - - 0 1", "a7a8q", "TACT"],["8/7P/1n1K2k1/8/8/1n6/1Q6/8 w - - 0 1", "h7h8q", "TACT"],["8/3K4/8/3n3k/4R3/8/3B1r2/8 w - - 0 1", "e4e5", "TACT"],["8/3P4/8/k7/1R6/1br5/8/5K2 w - - 0 1", "d7d8q", "TACT"],["5Nb1/4K3/4R3/b7/8/8/k7/8 w - - 0 1", "e6a6", "TACT"],["8/1P4q1/4K3/8/1k6/8/4B3/5n2 w - - 0 1", "b7b8q", "TACT"],["k7/5K2/8/4R2r/5Q2/8/5q2/8 w - - 0 1", "e5e8", "TACT"],["4K3/5P2/8/8/8/2r5/Bk4b1/8 w - - 0 1", "f7f8q", "TACT"],["6N1/4K3/8/4Q3/1k6/2r5/5b2/8 w - - 0 1", "e5f4", "TACT"],["NN6/4k3/2K2N2/5b2/5r2/8/8/8 w - - 0 1", "f6d5", "FORK"],["1k6/4N3/5n1B/8/1b1K4/8/8/1N6 w - - 0 1", "e7c6", "FORK"],["4k1q1/3p4/N7/8/1K6/2R5/8/5Q2 w - - 0 1", "c3c8", "TACT"],["3n4/1P6/8/6p1/4R3/3R4/7K/1k6 w - - 0 1", "b7b8q", "TACT"],["8/8/8/8/1Q5K/8/8/7k w - - 0 1", "h4h3 h1g1 b4e1", "M2"],["8/5K2/7R/8/R7/8/8/6k1 w - - 0 1", "a4a2 g1f1 h6h1", "M2"],["7K/8/8/2R5/8/6R1/8/1k6 w - - 0 1", "g3g2 b1a1 c5c1", "M2"],["6Q1/8/8/8/k7/8/K7/5R2 w - - 0 1", "f1f5 a4b4 g8b3", "M2"],["2r5/4Q3/8/8/8/1K6/8/k7 w - - 0 1", "e7a3 a1b1 a3b2", "M2"],["1R6/8/8/4K3/Q7/8/8/4k3 w - - 0 1", "b8b2 e1f1 a4d1", "M2"],["k7/8/5R2/3RK3/8/8/8/8 w - - 0 1", "f6f7 a8b8 d5d8", "M2"],["k7/8/8/8/8/7K/4R3/5R2 w - - 0 1", "e2e7 a8b8 f1f8", "M2"],["R7/8/8/8/3K3k/8/1Q6/8 w - - 0 1", "b2g2 h4h5 a8h8", "M2"],["8/3K1Q2/7R/8/8/8/8/3k4 w - - 0 1", "f7f2 d1c1 h6h1", "M2"],["6k1/8/8/8/8/2R5/8/RK6 w - - 0 1", "c3c7 g8h8 a1a8", "M2"],["2R5/8/8/6R1/7k/3K4/8/8 w - - 0 1", "c8g8 h4h3 g8h8", "M2"],["5R2/8/8/8/5B2/6K1/8/7k w - - 0 1", "f8e8 h1g1 e8e1", "M2"],["k6K/4Q3/4N3/8/8/8/8/8 w - - 0 1", "e6d8 a8b8 e7b7", "M2"],["7k/3Q4/2P5/8/8/8/8/5K2 w - - 0 1", "c6c7 h8g8 c7c8q", "M2"],["6R1/8/3N1k2/8/8/2r2q2/4Q3/4K3 w - - 0 1", "g8f8", "TACT"],["3k4/6Pp/8/8/3r2P1/3Q4/K7/8 w - - 0 1", "g7g8q", "TACT"],["8/p6B/2n5/R7/8/1B3k2/8/1K6 w - - 0 1", "b3d5", "TACT"],["7k/8/8/6B1/2QK4/5r1N/3n4/8 w - - 0 1", "c4c8", "TACT"],["8/8/8/7K/5P2/4k1rN/1Q6/1b6 w - - 0 1", "b2f2", "TACT"],["8/6P1/8/4r1N1/6B1/2k3K1/6n1/8 w - - 0 1", "g7g8q", "TACT"],["5B1N/8/8/3KQ3/8/7k/5n2/2r5 w - - 0 1", "e5e3", "TACT"],["3Qn3/2R3r1/8/5k2/8/2N5/1K6/8 w - - 0 1", "c7c5", "TACT"],["2kB4/6P1/8/1p2B3/1K6/3p4/8/8 w - - 0 1", "g7g8q", "TACT"],["5K2/bPr5/5k1P/8/4Q3/8/8/8 w - - 0 1", "e4f4", "TACT"],["8/2P5/4K2k/8/q7/5Q2/B1p5/8 w - - 0 1", "c7c8q", "TACT"],["8/7P/8/4P3/1r3B2/2p5/k7/6K1 w - - 0 1", "h7h8q", "TACT"],["8/7K/1kB2N2/1B6/1q6/7n/6p1/8 w - - 0 1", "f6d5", "FORK"],["8/8/K3k3/7b/n6R/8/2q1NN2/8 w - - 0 1", "e2d4", "FORK"],["n1N5/7B/8/p1N5/8/B7/b1K1k3/3N2b1 w - - 0 1", "d1c3", "FORK"],["k7/8/8/8/2Q5/8/4K3/3R4 w - - 0 1", "c4f7 a8b8 d1d8", "M2"],["8/8/8/2K3R1/k3B3/8/5R2/8 w - - 0 1", "g5g3 a4a5 g3a3", "M2"],["8/2R5/8/8/2N5/8/k5K1/3B4 w - - 0 1", "d1c2 a2a1 c7a7", "M2"],["6k1/8/3RK3/8/3B4/8/8/2R5 w - - 0 1", "d6d7 g8f8 d7d8", "M2"],["k7/8/8/8/7R/8/2RB3K/8 w - - 0 1", "h4b4 a8a7 c2a2", "M2"],["1k6/R7/8/7Q/5b2/8/6K1/8 w - - 0 1", "h5h7 b8c8 h7h8", "M2"],["8/8/8/8/4K3/R1R1B3/8/1k6 w - - 0 1", "e4d3 b1b2 c3b3", "M2"],["K1k5/8/7n/1Q6/8/6R1/8/8 w - - 0 1", "g3d3 c8c7 b5b7", "M2"],["2k5/5P2/8/8/8/3P4/4Q3/3K4 w - - 0 1", "e2e7 c8b8 f7f8q", "M2"],["8/8/2RB3N/8/8/5K2/8/4k3 w - - 0 1", "d6f4 e1f1 c6c1", "M2"],["7R/8/2R3K1/B7/8/8/8/1k6 w - - 0 1", "h8h2 b1a1 c6c1", "M2"],["8/kp6/4Q3/8/8/2N5/8/K7 w - - 0 1", "c3b5 a7b8 e6g8", "M2"],["7k/1K4R1/4p3/8/6Q1/8/8/8 w - - 0 1", "g7g8 h8h7 g4g7", "M2"],["5R1R/K7/8/6B1/8/8/8/4k3 w - - 0 1", "h8h2 e1d1 f8f1", "M2"],["7k/8/8/2P2K2/6P1/5Q2/8/8 w - - 0 1", "f5g6 h8g8 f3a8", "M2"],["2Q5/4P3/8/1K6/8/8/8/7k w - - 0 1", "c8h3 h1g1 e7e8q g1f2 e8e3", "M3"],["4k3/K7/1Q6/8/8/8/8/6R1 w - - 0 1", "b6e6 e8d8 e6f7 d8c8 g1g8", "M3"],["8/8/8/4K3/2Q5/8/2B5/7k w - - 0 1", "c4f1 h1h2 f1f2 h2h3 c2f5", "M3"],["7k/8/8/4N3/8/4Q3/8/7K w - - 0 1", "e3h6 h8g8 h6g6 g8h8 e5f7", "M3"],["7k/8/8/8/8/6K1/8/5RQ1 w - - 0 1", "g1d4 h8g8 d4d7 g8h8 f1f8", "M3"],["3k4/5P2/8/8/7K/8/1Q6/8 w - - 0 1", "b2b8 d8e7 f7f8q e7d7 f8e8", "M3"],["8/5NQ1/8/8/7K/8/7k/8 w - - 0 1", "g7b2 h2h1 h4h3 h1g1 b2g2", "M3"],["2k5/5K2/8/8/8/8/5R2/6Q1 w - - 0 1", "f2c2 c8b8 g1b6 b8a8 c2c8", "M3"],["K5k1/2Q5/8/8/6N1/8/8/8 w - - 0 1", "g4h6 g8h8 h6f5 h8g8 c7g7", "M3"],["1k6/3P4/8/8/1K6/8/8/3Q4 w - - 0 1", "d1d6 b8a8 d6a6 a8b8 d7d8q", "M3"],["8/8/1Q6/5P2/5K2/8/7k/8 w - - 0 1", "b6b2 h2h3 b2e2 h3h4 e2g4", "M3"],["k7/8/1B3K2/8/8/8/7Q/8 w - - 0 1", "h2g2 a8b8 f6e7 b8c8 g2a8", "M3"],["k7/8/8/8/8/2R1n3/3K4/2R5 w - - 0 1", "c3a3 a8b8 a3b3 b8a8 c1a1", "M3"],["3k4/6Q1/8/8/1B6/1K4p1/8/8 w - - 0 1", "g7e7 d8c8 b4d6 g3g2 e7c7", "M3"],["2QB2k1/4K3/8/3b4/8/8/8/8 w - - 0 1", "c8g4 g8h8 e7f8 h8h7 g4g7", "M3"],["8/P7/6N1/4K3/2k5/8/8/8 w - - 0 1", "a7a8q", "ENDG"],["8/6P1/1K6/8/6Nk/8/8/8 w - - 0 1", "g7g8q", "ENDG"],["7R/P7/8/K7/8/8/k7/8 w - - 0 1", "a7a8q", "ENDG"],["8/PK6/8/1k6/8/7N/8/8 w - - 0 1", "a7a8q", "ENDG"],["8/1P6/8/8/5N2/2k5/6K1/8 w - - 0 1", "b7b8q", "ENDG"],["8/P2k4/8/8/K7/8/8/3N4 w - - 0 1", "a7a8q", "ENDG"],["8/1K4P1/8/8/8/1N6/k7/8 w - - 0 1", "g7g8q", "ENDG"],["8/5P2/k3N3/8/8/5K2/8/8 w - - 0 1", "f7f8q", "ENDG"],["8/3P4/2K5/8/8/8/P2k4/8 w - - 0 1", "d7d8q", "ENDG"],["8/5P2/8/1K6/8/1k6/1P6/8 w - - 0 1", "f7f8q", "ENDG"],["8/6P1/K5k1/1P6/8/8/8/8 w - - 0 1", "g7g8q", "ENDG"],["8/5k1P/8/5P2/8/8/5K2/8 w - - 0 1", "h7h8q", "ENDG"],["8/1P6/8/8/8/5R1K/k7/8 w - - 0 1", "b7b8q", "ENDG"],["2K5/4P3/4k3/8/4P3/8/8/8 w - - 0 1", "e7e8q", "ENDG"],["8/6QP/8/1k6/8/3K4/8/8 w - - 0 1", "h7h8q", "ENDG"],["k7/8/1B1Q4/4r3/8/8/8/7K w - - 0 1", "d6c6 a8b8 c6c7 b8a8 c7c8", "M3"],["8/8/4Q1K1/8/5B2/8/8/k4b2 w - - 0 1", "f4e5 a1b1 e6b3 b1c1 e5f4", "M3"],["4Q3/2P5/k7/8/1n6/7K/8/8 w - - 0 1", "c7c8q a6b6 e8a4 b4c6 c8c6", "M3"],["8/8/6R1/8/8/1Q6/3K1n2/5k2 w - - 0 1", "b3b5 f2d3 b5h5 d3e5 h5e2", "M3"],["4Q3/4B3/8/8/1K4b1/8/k7/8 w - - 0 1", "e8a4 a2b2 a4b3 b2c1 e7g5", "M3"],["6k1/8/4K3/Q6P/8/8/4P3/8 w - - 0 1", "a5g5 g8h8 e6f7 h8h7 g5g7", "M3"],["Q3K2k/8/3P4/8/8/7P/8/8 w - - 0 1", "e8f7 h8h7 a8g8 h7h6 g8g6", "M3"],["4k3/8/2n5/6N1/8/K4Q2/8/8 w - - 0 1", "f3f7 e8d8 g5e6 d8c8 f7c7", "M3"],["1k6/3K4/8/8/Q7/1n6/8/2N5 w - - 0 1", "a4b3 b8a8 d7c8 a8a7 b3b7", "M3"],["8/3K3k/B7/6Q1/8/8/5p2/8 w - - 0 1", "a6d3 h7h8 g5h6 h8g8 d3c4", "M3"],["8/1r6/6K1/7R/8/3Q4/8/4k3 w - - 0 1", "h5e5 e1f2 e5e2 f2g1 d3d1", "M3"],["8/6B1/8/8/2n4K/2Q5/8/7k w - - 0 1", "c3h3 h1g1 g7d4 c4e3 d4e3", "M3"],["2Q5/8/4R3/8/8/4b2k/K7/8 w - - 0 1", "e6g6 h3h2 c8h8 e3h6 h8h6", "M3"],["5KR1/8/8/1Q6/8/8/7k/3b4 w - - 0 1", "b5e5 h2h1 e5h8 d1h5 h8h5", "M3"],["5k2/7P/1K6/8/8/1Q6/8/3n4 w - - 0 1", "h7h8q f8e7 h8g8 e7d7 b3e6", "M3"]];
 const $=s=>document.querySelector(s);
-let P={xp:0,done:{},beat:{},puz:{},theme:0};
-try{Object.assign(P,JSON.parse(localStorage.getItem("cw")||"{}"))}catch(e){}
-const save=()=>{try{localStorage.setItem("cw",JSON.stringify(P))}catch(e){}};
-const lvl=()=>Math.floor(P.xp/100)+1;
-const hud=()=>{$("#hud").textContent="Lv "+lvl()+" · "+P.xp+" XP"};
+let P={xp:0,ld:{},beat:{},puz:{},skip:{},rec:{},hist:[],fav:{},warn:"imp",mode:"",name:"Player",theme:0,st:{g:0,w:0,l:0,d:0,s:0,b:0}};
+try{const o=JSON.parse(localStorage.getItem("cw2")||"{}");Object.assign(P,o);P.st=Object.assign({g:0,w:0,l:0,d:0,s:0,b:0},o.st)}catch(e){}
+const save=()=>{try{localStorage.setItem("cw2",JSON.stringify(P))}catch(e){}};
+const lvl=()=>Math.floor(P.xp/100)+1,cnt=o=>Object.keys(o).length;
 const addXp=n=>{P.xp+=n;save();hud()};
+const hud=()=>{$("#hud").textContent="Lv "+lvl()+" · "+P.xp+" XP"};
 const say=(s,t,e)=>{$(s).innerHTML=(e||"🧑‍🏫")+" "+t};
 const G={k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟\uFE0E"},N={p:"pawn",n:"knight",b:"bishop",r:"rook",q:"queen",k:"king"};
-const TH=[["Classic Wood","#f0d9b5","#b58863",0],["Ocean Blue","#cfe8f5","#4a90b8",60],["Forest Green","#eeeed2","#6a994e",120],["Candy World","#ffe0ef","#ff7eb6",200],["Space Galaxy","#8a79b8","#2b1f4a",300]];
-function th(i){P.theme=i;save();const t=TH[i],s=document.documentElement.style;s.setProperty("--l",t[1]);s.setProperty("--d",t[2])}
+const TH=[["Classic Wood","#f0d9b5","#b58863",0],["Ocean Blue","#cfe8f5","#4a90b8",60],["Forest Green","#eeeed2","#6a994e",120],["Marble","#e8e4dc","#8c8f96",200],["Midnight","#9aa6c4","#33405f",300]];
+function th(i){P.theme=i;save();const s=document.documentElement.style;s.setProperty("--l",TH[i][1]);s.setProperty("--d",TH[i][2])}
+function tmode(){const dk=document.documentElement.dataset.theme=="dark"||(!document.documentElement.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);P.mode=dk?"light":"dark";document.documentElement.dataset.theme=P.mode;save()}
+/* ---------- navigation ---------- */
+let ST=[];
+function nav(f,...a){ST.push([f,a]);f(...a)}
+function go(f,...a){ST=[[f,a]];f(...a)}
+function back(){if(ST.length>1)ST.pop();const[f,a]=ST[ST.length-1];f(...a)}
+function show(id){document.querySelectorAll(".v").forEach(e=>e.hidden=e.id!=id);$("#back").hidden=ST.length<2;
+$("#nav").innerHTML=[["home","Home",showHome],["learn","Learn",showLearn],["play","Bots",showBots],["puz","Puzzles",showPuzzles],["me","Profile",showMe]].map(x=>`<button class="${x[0]==id?"on":""}" onclick="go(${x[2].name})">${x[1]}</button>`).join("");hud();scrollTo(0,0)}
 /* ---------- board ---------- */
 function draw(st){const g=st.g,bd=g.board(),tg=st.sel?g.moves({square:st.sel,verbose:true}).map(m=>m.to):[],ck=g.in_check()?g.turn():null;st.el.innerHTML="";
-for(let r=0;r<8;r++)for(let c=0;c<8;c++){const sq="abcdefgh"[c]+(8-r),p=bd[r][c],d=document.createElement("div");
-d.className="sq "+((r+c)%2?"d":"l")+(st.sel==sq?" sel":"")+(st.last&&(st.last.from==sq||st.last.to==sq)?" last":"")+(tg.includes(sq)?" tg":"")+(sq==st.star?" star":"")+(p&&p.type=="k"&&p.color==ck?" chk":"");
-if(p)d.innerHTML='<span class="pc '+p.color+'">'+G[p.type]+"</span>";
+for(let r=0;r<8;r++)for(let c=0;c<8;c++){const rr=st.flip?7-r:r,cc=st.flip?7-c:c,sq="abcdefgh"[cc]+(8-rr),p=bd[rr][cc],d=document.createElement("div");
+d.className="sq "+((rr+cc)%2?"d":"l")+(st.sel==sq?" sel":"")+(st.last&&(st.last.from==sq||st.last.to==sq)?" last":"")+(tg.includes(sq)?" tg":"")+(sq==st.star?" star":"")+(p&&p.type=="k"&&p.color==ck?" chk":"");
+d.innerHTML=(p?'<span class="pc '+p.color+'">'+G[p.type]+"</span>":"")+(c==0?'<i class="rk">'+(8-rr)+"</i>":"")+(r==7?'<i class="fl">'+"abcdefgh"[cc]+"</i>":"");
 d.onclick=()=>click(st,sq);st.el.appendChild(d)}}
 function click(st,sq){if(st.lock)return;const g=st.g;
 if(st.sel){const mv=g.moves({square:st.sel,verbose:true}).find(m=>m.to==sq);
-if(mv){st.sel=null;st.star=null;const m=g.move({from:mv.from,to:mv.to,promotion:"q"});st.last=m;draw(st);st.onMove&&st.onMove(m);return}}
+if(mv){const pc=mv.piece;st.sel=null;st.star=null;const m=g.move({from:mv.from,to:mv.to,promotion:"q"});st.last=m;draw(st);st.onMove&&st.onMove(m);return}}
 const p=g.get(sq);
-if(p&&p.color==g.turn()&&(!st.me||p.color==st.me))st.sel=sq;else{if(st.sel&&st.bad)st.bad(sq);st.sel=null}
+if(p&&p.color==g.turn()&&(!st.me||p.color==st.me)){st.sel=sq;st.pt=p.type}else{if(st.sel&&st.bad)st.bad(sq,st);st.sel=null}
 draw(st)}
 /* ---------- engine ---------- */
 const V={p:100,n:300,b:320,r:500,q:900,k:0};
@@ -99,86 +107,140 @@ function loss(g,m){g.undo();let best=-1e9,mine=0;for(const x of g.moves({verbose
 g.move({from:m.from,to:m.to,promotion:m.promotion});return best-mine}
 /* ---------- bots ---------- */
 const BOTS=[
-["Baby Bot","🍼",250,0,1,"Plays randomly","Goo goo! I only just learned the pieces. Be gentle!","Beep boop… was that a good move?"],
-["Teddy","🧸",400,1,.6,"Makes silly mistakes","Hi! I love hugs. I also forget to protect my pieces…","Oops! Did I leave something hanging again?"],
-["Coco","🐰",550,1,.4,"Cheerful & curious","Coco here! Let’s play a quick game before snack time!","Hop hop! Watch your pieces."],
+["Baby Bot","🍼",250,0,1,"Plays randomly","Goo goo! I just learned the pieces. Be gentle!","Beep boop… was that a good move?"],
+["Teddy","🧸",400,1,.6,"Friendly, forgets to defend","Hi! I love hugs. I also forget to protect my pieces…","Oops! Did I leave something hanging again?"],
+["Coco","🐰",550,1,.4,"Cheerful and curious","Coco here! Let’s play before snack time!","Hop hop! Watch your pieces."],
 ["Sunny","☀️",700,1,.25,"Bold opener","Sunny day, sunny moves! Ready?","Bright idea: always look for free pieces!"],
 ["Knight","🐴",850,2,.3,"Loves tricky jumps","Neigh! Beware of my sneaky jumps.","Knights love forks. Guard your pieces!"],
-["Professor","🎓",1000,2,.2,"Thinks before moving","Let’s apply some theory. Control the centre!","Tip: develop every piece before attacking."],
-["Queen Bee","🐝",1150,2,.12,"Attacks fast","Buzz! I attack early and I attack often.","Bzzz — is your king safe?"],
-["Captain Chess","🧭",1300,2,.06,"Steady tactician","Captain on deck. Fair winds, good game!","A calm position hides sharp tactics."],
-["Shadow","🥷",1500,3,.1,"Silent and ruthless","…You will not see my plan until it is too late.","…"],
-["Grandmaster Max","🧙",1700,3,.04,"Precise & patient","Welcome. Show me what you have learned.","Every pawn move changes the board."],
-["Queen Aurora","👑",1850,3,.02,"Teaches defence","Defence is the secret of champions. Let me show you.","Protect your king before you attack!"],
-["The Final Boss","🤖",2000,3,0,"Never blunders","INITIATING FINAL CHALLENGE.","CALCULATING…"]];
-let S,Hh;
-function botsDraw(){$("#game").hidden=1;$("#bots").hidden=0;$("#bots").innerHTML=BOTS.map((b,i)=>{const u=i<4||P.beat[i-1];
-return `<div class="card ${u?"":"lock"}" onclick="${u?`startBot(${i})`:""}"><span class="em">${u?b[1]:"🔒"}</span><b>${b[0]}</b><small>~${b[2]} · ${b[5]}</small><small>${P.beat[i]?"✅ Beaten":u?"Tap to play":"Beat "+BOTS[i-1][0]+" to unlock"}</small></div>`}).join("")}
-function startBot(i){const b=BOTS[i];S={i,g:new Chess(),el:$("#pb"),me:"w",onMove:pm};$("#bots").hidden=1;$("#game").hidden=0;
-$("#ptop").innerHTML=`${b[1]} <b>${b[0]}</b> · ~${b[2]} rating · ${b[5]}. You are White.`;say("#pc",b[6],b[1]);draw(S);mv()}
-function quick(){go("play");startBot(0)}
-function mv(){$("#mv").textContent=S.g.history().map((s,i)=>(i%2?"":(i/2+1|0)+". ")+s).join(" ")}
-function fin(){const g=S.g;if(!g.game_over())return 0;const b=BOTS[S.i][0];let t;
-if(g.in_checkmate()){const w=g.turn()!="w";if(w){if(!P.beat[S.i]){P.beat[S.i]=1;addXp(30+S.i*5)}else addXp(5)}
-t=w?"🏆 Checkmate — you beat "+b+"! XP earned"+(S.i<11?" and the next bot is unlocked.":"!"):b+" wins by checkmate. Every game teaches you something — try again!"}else t="🤝 It’s a draw — well played!";
-say("#pc",t);S.lock=1;return 1}
-function pm(m){mv();if(fin())return;S.lock=1;const b=BOTS[S.i];say("#pc","Checking your move…");
-setTimeout(()=>{if(loss(S.g,m)>=250){const r=pick(S.g,{d:2,e:0});
-say("#pc",`Careful! ${b[0]} could play <b>${r.san}</b>${r.captured?`, winning your ${N[r.captured]}`:""}. Want to try a different move?<br><button class="s" onclick="takeBack()">↩ Take it back</button> <button class="s" onclick="bm()">Keep going</button>`)}else bm()},30)}
-function takeBack(){S.g.undo();S.last=null;S.lock=0;draw(S);mv();say("#pc","No problem — look for a safer move!")}
-function bm(){const b=BOTS[S.i];S.lock=1;say("#pc","Thinking…",b[1]);
-setTimeout(()=>{const r=pick(S.g,{d:b[3],e:b[4]});S.last=S.g.move(r);draw(S);mv();if(!fin()){S.lock=0;say("#pc",Math.random()<.3?b[7]:"Your move!",b[1])}},60)}
-function undo(){if(S.lock||S.g.history().length<2)return;S.g.undo();S.g.undo();S.last=null;draw(S);mv()}
-function hint(){if(S.lock)return;const r=pick(S.g,{d:2,e:0});S.sel=r.from;S.star=r.to;draw(S);say("#pc","Try moving this piece to the ⭐ — it "+(r.captured?"wins a "+N[r.captured]+".":"improves your position."))}
-/* ---------- academy ---------- */
-const LS=[
-{i:"🏰",n:"The Rook",t:"Meet the Rook! It slides in straight lines — up, down, left or right — as far as it likes. Slide it to the ⭐.",f:"8/8/8/8/3R4/8/8/K6k",s:"a8",h:"Rooks move straight, never diagonally. Follow the dots!"},
-{i:"🐘",n:"The Bishop",t:"Meet the Bishop! It slides diagonally and always stays on the same colour. Reach the ⭐.",f:"8/8/8/8/3B4/8/8/K6k",s:"b8",h:"Bishops only move diagonally. It may take two moves."},
-{i:"🐴",n:"The Knight",t:"Meet the Knight! It jumps in an L shape — two squares one way, one square sideways — and can hop over pieces. Reach the ⭐.",f:"8/8/8/8/8/8/8/KN5k",s:"d5",h:"The knight moves in an L. Try c3 first!"},
-{i:"👑",n:"The Queen",t:"The Queen is the strongest piece: she moves like a rook and a bishop together. Reach the ⭐.",f:"8/8/8/8/3Q4/8/8/K6k",s:"b8",h:"Use any straight line or diagonal. Two moves will do it."},
-{i:"🤴",n:"The King",t:"The King moves one square in any direction. Guard him well — if he’s trapped, the game is over! Walk to the ⭐.",f:"8/8/8/8/8/8/8/K6k",s:"c3",h:"The king takes small steps, one square at a time."},
-{i:"♟️",n:"The Pawn",t:"Pawns march forward one square (two on their first move) and capture diagonally. March to the ⭐.",f:"8/8/8/8/8/8/4P3/K6k",s:"e6",h:"Pawns only go forward. Tap it to see the dots."},
-{i:"⚔️",n:"Capture!",t:"To capture, move onto an enemy piece. Take both black pawns with your Rook!",f:"7k/8/8/3p4/7p/8/8/K2R4",c:1,h:"Slide your rook onto a black pawn to capture it."},
-{i:"🏁",n:"Checkmate!",t:"Checkmate means the king is attacked and has nowhere to run. Black’s king is stuck in the corner — find the move that traps it!",f:"k7/8/1K6/8/8/8/8/7R",m:1,h:"Your king already blocks a7 and b7. Which rook move gives check on the top row?"}];
-let LI=0,LST;
-function mapDraw(){$("#lesson").hidden=1;$("#map").hidden=0;
-$("#map").innerHTML=LS.map((L,i)=>{const u=i==0||P.done[i-1];return `<div class="node ${u?"":"lock"} ${P.done[i]?"done":""}" style="margin-left:${[0,36,72,36][i%4]}px" onclick="${u?`openL(${i})`:""}"><span class="em">${u?L.i:"🔒"}</span><div><b>${i+1}. ${L.n}</b><small>${P.done[i]?"✅ Completed":u?"Start mission":"Finish the last mission first"}</small></div></div>`}).join("")+`<div class="node" onclick="quick()"><span class="em">🎮</span><div><b>Final quest: your first game</b><small>Beat Baby Bot!</small></div></div>`}
-function openL(i){LI=i;const L=LS[i];$("#map").hidden=1;$("#lesson").hidden=0;$("#lnext").hidden=1;$("#lt").textContent=L.i+" "+L.n;$("#lx").textContent=L.t;
-const g=new Chess(L.f+" w - - 0 1");
-LST={g,el:$("#lb"),me:"w",bad:()=>say("#lc",L.h),onMove:m=>{
-const ok=L.s?m.to==L.s:L.c?!g.fen().split(" ")[0].includes("p"):/#/.test(m.san);
-if(ok){P.done[i]=1;addXp(20);LST.lock=1;$("#lnext").hidden=0;say("#lc","🎉 Mission complete! +20 XP")}
-else{const a=g.fen().split(" ");a[1]="w";a[3]="-";g.load(a.join(" "));draw(LST);say("#lc",L.c?"Nice capture! Keep going.":"Good move! Keep heading for the ⭐.")}}};
-draw(LST);say("#lc","Tap your piece to see where it can go.")}
-function nextL(){LI+1<LS.length?openL(LI+1):mapDraw()}
+["Professor","🎓",1000,2,.2,"Tactical and explains mistakes","Let’s apply some theory. Control the centre!","Tip: develop every piece before attacking."],
+["Queen Bee","🐝",1150,2,.12,"Attacks fast","Buzz! I attack early and often.","Bzzz — is your king safe?"],
+["Captain Chess","🧭",1300,2,.06,"Steady tactician","Captain on deck. Good game!","A calm position hides sharp tactics."],
+["Shadow","🥷",1500,3,.1,"Aggressive attacker","…You will not see my plan until it is too late.","…"],
+["Grandmaster Max","🧙",1700,3,.04,"Strategic and precise","Welcome. Show me what you have learned.","Every pawn move changes the board."],
+["Queen Aurora","👑",1850,3,.02,"Positional, teaches defence","Defence is the secret of champions.","Protect your king before you attack!"],
+["The Final Boss","🤖",2000,3,0,"Never blunders","FINAL CHALLENGE INITIATED.","CALCULATING…"]];
+const TIER=i=>i<4?"Beginner":i<8?"Intermediate":"Advanced";
+let S,F="All",PK=-1,HB;
+function showBots(){show("play");$("#game").hidden=1;$("#bots").hidden=0;
+const res=S&&!S.over?`<div class="card" style="margin-bottom:12px" onclick="nav(showGame)"><b>▶ Resume your game vs ${BOTS[S.i][0]}</b><small>Your game is saved — nothing was reset.</small></div>`:"";
+$("#bots").innerHTML=`<h2 style="margin-top:0">Choose your opponent</h2>${res}<div class="row" style="justify-content:flex-start">${["All","Beginner","Intermediate","Advanced"].map(t=>`<button class="s ${F==t?"on":""}" onclick="F='${t}';showBots()">${t}</button>`).join("")}</div>
+<div class="grid">${BOTS.map((b,i)=>{if(F!="All"&&TIER(i)!=F)return"";const u=i<4||P.beat[i-1],r=P.rec[i]||[0,0,0];
+return `<div class="card ${u?"":"lock"}" onclick="${u?`PK=${i};showBots()`:""}"><span class="em">${u?b[1]:"🔒"}</span><b>${b[0]}</b><span class="badge ${i<4?"g":i<8?"y":""}">${TIER(i)}</span><small>${b[5]}</small><small>~${b[2]} rating</small><small>${u?`You: ${r[0]}W ${r[1]}L ${r[2]}D`:"Beat "+BOTS[i-1][0]+" to unlock"}</small>${u?`<b style="color:var(--gold)">${PK==i?"Choose below ↓":"Play ▸"}</b>`:""}</div>`}).join("")}</div>
+${PK>=0?`<h3 style="margin-top:20px">${BOTS[PK][1]} ${BOTS[PK][0]}: “${BOTS[PK][6]}”</h3><div class="row" style="justify-content:flex-start"><button class="b" onclick="play(${PK},'w')">Play as White</button><button class="b o" onclick="play(${PK},'b')">Play as Black</button><button class="b o" onclick="play(${PK},Math.random()<.5?'w':'b')">Random</button></div>`:""}`}
+function play(i,c){const b=BOTS[i];S={i,c,g:new Chess(),el:$("#pb"),me:c,flip:c=="b",onMove:pm,seen:{},warns:0,over:0,rs:0,
+bad:(sq,st)=>say("#pc",st.g.in_check()?"You’re in check! Move your King, block, or capture the attacker.":"That move isn’t allowed — the piece can’t go there, or it would leave your King in check.")};
+if(ST[ST.length-1][0]!=showGame)nav(showGame);else showGame()}
+function showGame(){show("play");$("#bots").hidden=1;$("#game").hidden=0;const b=BOTS[S.i];$("#rs").textContent="🏳 Resign";
+$("#ptop").innerHTML=`${b[1]} <b>${b[0]}</b> · ~${b[2]} · ${b[5]}. You play ${S.c=="w"?"White":"Black"}.`;draw(S);mv();
+if(!S.started){S.started=1;say("#pc",b[6],b[1]);if(S.c=="b"){S.lock=1;setTimeout(bm,500)}}}
+const mv=()=>{$("#mv").textContent=S.g.history().map((s,i)=>(i%2?"":(i/2+1|0)+". ")+s).join(" ")};
+function rec(r){if(S.over)return;S.over=1;const s=P.st,b=P.rec[S.i]=P.rec[S.i]||[0,0,0];s.g++;
+if(r=="w"){s.w++;s.s++;s.b=Math.max(s.b,s.s);b[0]++;if(!P.beat[S.i]){P.beat[S.i]=1;addXp(30+S.i*5)}else addXp(5)}else if(r=="l"){s.l++;s.s=0;b[1]++;addXp(3)}else{s.d++;b[2]++;addXp(8)}
+P.hist.unshift({b:S.i,r,m:S.g.history().length,d:Date.now()});P.hist=P.hist.slice(0,20);save()}
+function endMsg(t){say("#pc",t+`<br><button class="b" onclick="play(S.i,S.c)">Rematch</button><button class="b o" onclick="back()">Choose another bot</button>`,BOTS[S.i][1])}
+function fin(){const g=S.g;if(!g.game_over())return 0;const b=BOTS[S.i][0];S.lock=1;
+if(g.in_checkmate()){const w=g.turn()!=S.c;rec(w?"w":"l");endMsg(w?`🏆 Victory! Checkmate — you beat ${b}! XP earned${S.i<11?" and the next bot is unlocked":""}. You made ${S.warns} risky moves.`:`${b} wins by checkmate. Review the move list, then try again — every game teaches you something.`)}
+else{rec("d");endMsg("🤝 It’s a draw — well played!")}return 1}
+function resign(){if(S.over)return;if(!S.rs){S.rs=1;$("#rs").textContent="Tap again to resign";return}rec("l");S.lock=1;endMsg("You resigned. Ready for a rematch?")}
+function pm(m){P.fav[m.piece]=(P.fav[m.piece]||0)+1;mv();$("#pw").innerHTML="";if(fin())return;S.lock=1;say("#pc","Your move was played.",BOTS[S.i][1]);
+setTimeout(()=>{const w=P.warn;if(w!="none"){const l=loss(S.g,m);if(l>=(w=="imp"?250:100)){const r=pick(S.g,{d:2,e:0});
+if(!S.seen[r.san]&&!S.seen[r.to]){S.seen[r.san]=S.seen[r.to]=1;S.warns++;$("#pw").innerHTML=`⚠ ${w=="hints"?"Tip: ":""}Your ${r.captured?N[r.captured]:"position"} may be under attack (${r.san}). <button class="lk" onclick="undo()">Undo</button><button class="lk" onclick="$('#pw').innerHTML=''">Dismiss</button>`}}}bm()},30)}
+function bm(){const b=BOTS[S.i];S.lock=1;$("#pc").innerHTML=b[1]+' Thinking<span class="dots"></span>';
+setTimeout(()=>{if(S.over)return;const r=pick(S.g,{d:b[3],e:b[4]});S.last=S.g.move(r);draw(S);mv();if(!fin()){S.lock=0;say("#pc",Math.random()<.25?b[7]:"Your move!",b[1])}},400)}
+function undo(){if(S.lock||S.over||S.g.history().length<(S.c=="w"?2:3))return;S.g.undo();S.g.undo();S.last=null;S.sel=null;$("#pw").innerHTML="";draw(S);mv()}
+function hint(){if(S.lock||S.over)return;const r=pick(S.g,{d:2,e:0});S.sel=r.from;S.star=r.to;draw(S);say("#pc","Try moving this piece to the ★ — it "+(r.captured?"wins a "+N[r.captured]+".":"improves your position."))}
+/* ---------- academy: 10 lessons x 6 pieces ---------- */
+const PN={P:"Pawn",R:"Rook",N:"Knight",B:"Bishop",Q:"Queen",K:"King"},PI={P:"♟️",R:"🏰",N:"🐴",B:"🐘",Q:"👑",K:"🤴"};
+const RULE={P:"Pawns walk forward (never back) and capture one step diagonally forward.",R:"The Rook only moves in straight lines: up, down, left or right.",N:"The Knight moves in an L: two squares one way, then one square sideways.",B:"The Bishop only moves diagonally.",Q:"The Queen moves in any straight line or diagonal.",K:"The King moves one square — and never onto a square an enemy attacks."};
+const DIF=["Very Easy","Very Easy","Easy","Easy","Easy","Medium","Medium","Medium","Hard","Advanced"];
+const LSN={
+R:[["Rd4","e4","Move the Rook one square to the right."],["Rd4","d5","Move the Rook one square up."],["Rd4","h4","Slide the Rook all the way across to the ★."],["Rd4","d7","Slide the Rook up the board to the ★."],["Rd4","g7","Reach the ★ — it takes two moves!"],["Re1,Pe2","e4","Your own pawn blocks the Rook. Go around it!"],["Rd4,pd6","d5","Rooks can’t jump. Stop just before the enemy pawn."],["Rd4,pd7","x","Capture the black pawn by moving onto it."],["Ra4,pd4,pd7","x","Capture both pawns, one after the other."],["Kb6,ka8,Rh1","m","Final challenge: checkmate the black King!"]],
+B:[["Bd4","e5","Move the Bishop one square diagonally."],["Bd4","c5","Move one square along the other diagonal."],["Bd4","g7","Slide the Bishop far along the diagonal."],["Bd4","a7","Slide the Bishop up-left to the ★."],["Bd4","b8","Reach the ★ — Bishops need two moves here."],["Bc1,Pd2","f6","Your pawn blocks one way. Find another diagonal!"],["Bd4,pf6","e5","Bishops can’t jump. Stop before the pawn at f6."],["Bd4,pg7","x","Capture the black pawn."],["Bd4,pb6,pc7","x","Capture both pawns."],["Bd4,qb6,pc7","x","Final challenge: win the Queen and the pawn!"]],
+N:[["Nd4","e6","Jump in an L: two up, one right."],["Nd4","f5","Jump in an L: two right, one up."],["Nb1","e4","Reach the ★ in two L-jumps."],["Nb1","e5","Reach the ★ — it takes three jumps!"],["Nd4","g5","Two jumps will get you to the ★."],["Pd5,Pe4,Pc4,Pd3,Nd4","e6","Knights jump over pieces! Escape your own pawns."],["Nd4,pd5,pe4,pc4,pd3","f5","Jump over the enemy pawns to the ★."],["Nd4,pe6","x","Capture the black pawn with an L-jump."],["Nd4,pf5,pe7","x","Capture both pawns with L-jumps."],["Nd4,pb5,pc7,pe6","x","Final challenge: capture all three pawns!"]],
+Q:[["Qd4","d5","The Queen moves like a Rook: one step up."],["Qd4","e5","The Queen moves like a Bishop: one step diagonally."],["Qd4","h4","Slide the Queen across the board."],["Qd4","d7","Slide the Queen far up the file."],["Qd4","h6","Reach the ★ in two moves."],["Qd1,Pc2,Pd2,Pe2","g4","The Queen is boxed in. Slide out sideways first!"],["Qd4,pg7","f6","Queens can’t jump. Stop before the pawn."],["Qd4,pg7","x","Capture the black pawn."],["Qd4,pd7,pg7","x","Capture both pawns."],["Kb6,ka8,Qg1","m","Final challenge: checkmate the black King!"]],
+K:[["Ke4","e5","The King moves one square. Step up."],["Ke4","f4","Step one square to the right."],["Ke4","f5","The King can also step diagonally."],["Ke4","e7","Take three steps up the board."],["Ka1","c3","Walk to the ★ in two steps."],["Ke4,rh5","c3","The enemy Rook guards row 5. Kings can’t step there!"],["Ke1,re8","d2","Your King is in check! Step out of the Rook’s line."],["Ke4,pe5","x","Capture the unprotected pawn."],["Ke4,pd5,pd7","x","Capture both pawns — carefully!"],["Ke1,rd8,rf8","e4","Final challenge: walk between the two Rooks!"]],
+P:[["Pe2","e3","Pawns move forward one square."],["Pe2","e4","On its first move a Pawn can jump two squares."],["Pe3","e5","March the Pawn forward to the ★."],["Pe4,pd5","d5","Pawns capture diagonally. Take the pawn!"],["Pe4,pe5,Pd2","d4","Pawns can’t capture straight ahead. Move the other pawn!"],["Pe2,pf3","f3","Capture the pawn on your right."],["Pe7","e8","Reach the last row to promote into a Queen!"],["Pa7,rb8","b8","Capture the Rook and promote!"],["Pe4,pd5,pc6","c6","Capture twice in a row."],["Pb6,pa7","a8","Final challenge: capture, then promote!"]]};
+function fenOf(s){const g=Array.from({length:8},()=>Array(8).fill(""));let wk=0,bk=0;
+s.split(",").forEach(x=>{g[8-+x[2]]["abcdefgh".indexOf(x[1])]=x[0];if(x[0]=="K")wk=1;if(x[0]=="k")bk=1});if(!wk)g[7][0]="K";if(!bk)g[0][7]="k";
+return g.map(r=>{let o="",n=0;r.forEach(c=>{if(c){if(n)o+=n;n=0;o+=c}else n++});return o+(n||"")}).join("/")+" w - - 0 1"}
+const ldn=pk=>LSN[pk].filter((_,i)=>P.ld[pk+i]).length;
+function showLearn(){show("learn");$("#acad").hidden=0;$("#jour").hidden=1;$("#les").hidden=1;const t=Object.keys(PN).reduce((a,k)=>a+ldn(k),0);
+$("#acad").innerHTML=`<h2 style="margin-top:0">Learning Academy</h2><p class="mut">Learn each piece by moving it yourself — 10 lessons per piece, from very easy to advanced. ${t}/60 lessons completed.</p>
+<div class="grid">${["R","B","N","Q","K","P"].map(k=>`<div class="card" onclick="nav(showJourney,'${k}')"><span class="em">${PI[k]}</span><b>${PN[k]} Master Journey</b><div class="bar"><i style="width:${ldn(k)*10}%"></i></div><small>${ldn(k)}/10 lessons${ldn(k)==10?" · 🏅 Badge earned":""}</small></div>`).join("")}</div>
+<div class="card" style="margin-top:14px" onclick="nav(showBots)"><b>🎮 Ready for a real game?</b><small>Test your skills against Baby Bot.</small></div>`}
+function showJourney(pk){show("learn");$("#acad").hidden=1;$("#jour").hidden=0;$("#les").hidden=1;
+const cur=LSN[pk].findIndex((_,i)=>!P.ld[pk+i]);
+$("#jour").innerHTML=`<h2 style="margin-top:0">${PI[pk]} ${PN[pk].toUpperCase()} MASTER JOURNEY</h2><p class="mut">${RULE[pk]}</p><div class="lv">${LSN[pk].map((_,i)=>{const d=P.ld[pk+i],u=i==0||P.ld[pk+(i-1)];
+return `<button class="lb ${d?"done":i==cur?"cur":u?"":"lock"}" onclick="${u?`nav(showLesson,'${pk}',${i})`:""}">${u?i+1:"🔒"}<small>${d?"★".repeat(d):i==cur?"Start":u?"":""}</small></button>`}).join("")}</div>
+${ldn(pk)==10?`<div class="coach pop">🏅 <b>${PN[pk]} Master</b> — certificate earned! You completed all 10 lessons.</div>`:""}`}
+let LST,LK=["R",0];
+function showLesson(pk,i){show("learn");$("#acad").hidden=1;$("#jour").hidden=1;$("#les").hidden=0;LK=[pk,i];const[pc,goal,txt]=LSN[pk][i];
+$("#lnext").hidden=1;$("#lt").textContent=`Learn How the ${PN[pk]} Moves`;$("#ls").textContent=`Lesson ${i+1} of 10 · ${DIF[i]}`;$("#lp").style.width=(i*10)+"%";
+$("#lx").innerHTML=`<b>Instruction:</b> ${txt}${goal=="x"||goal=="m"?"":" Move to the highlighted ★ square."}`;
+const g=new Chess(fenOf(pc));
+LST={g,el:$("#lb"),me:"w",err:0,star:/^[a-h][1-8]$/.test(goal)?goal:null,
+bad:()=>{LST.err++;say("#lc","Not quite — that piece can’t go there. "+RULE[pk])},
+onMove:m=>{const ok=/^[a-h]/.test(goal)?m.to==goal:goal=="x"?!/[pnbrq]/.test(g.fen().split(" ")[0]):/#/.test(m.san);
+if(ok){const s=LST.err==0?3:LST.err<3?2:1;LST.lock=1;LST.star=null;if(!P.ld[pk+i]){addXp(10+s*3)}P.ld[pk+i]=Math.max(P.ld[pk+i]||0,s);save();
+say("#lc","🎉 Well done! "+"★".repeat(s)+" earned"+(i<9?". Lesson "+(i+2)+" is unlocked!":`. 🏅 ${PN[pk]} Master badge earned!`));$("#lc").classList.remove("pop");void $("#lc").offsetWidth;$("#lc").classList.add("pop");$("#lnext").hidden=0;$("#lnext").textContent=i<9?"Next lesson →":"Finish journey"}
+else{const a=g.fen().split(" ");a[1]="w";a[3]="-";g.load(a.join(" "));draw(LST);say("#lc","Good move! Keep going — you still need to reach the goal.")}}};
+draw(LST);say("#lc",goal=="x"?"Tap your piece, then tap a black piece to capture it.":"Tap your piece to see where it can go.")}
+function nextL(){const[pk,i]=LK;if(i<9){ST[ST.length-1]=[showLesson,[pk,i+1]];showLesson(pk,i+1)}else back()}
 /* ---------- puzzles ---------- */
-const PZ=[
-{n:"Back-rank mate",f:"6k1/5ppp/8/8/8/8/8/R3K3 w - - 0 1",a:"a1a8",h:"The king is trapped behind its own pawns. Which rook move gives check?"},
-{n:"Scholar’s mate",f:"r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 0 1",a:"h5f7",h:"Your queen and bishop both aim at the same weak square."},
-{n:"Corner trap",f:"k7/8/1K6/8/8/8/8/7R w - - 0 1",a:"h1h8",h:"Your king already guards a7 and b7. Use the rook on the top row!"},
-{n:"Win the queen",f:"4k3/8/8/3q4/8/8/8/3RK3 w - - 0 1",a:"d1d5",h:"Look for an enemy piece you can capture for free."},
-{n:"Queen and king",f:"7k/5Q2/6K1/8/8/8/8/8 w - - 0 1",a:"f7g7",h:"Your king protects the square where the queen delivers mate."}];
-const dayP=()=>Math.floor(Date.now()/864e5)%PZ.length;
-function pzList(){$("#pz").hidden=1;$("#plist").hidden=0;$("#plist").innerHTML=PZ.map((p,i)=>`<div class="card" onclick="openP(${i})"><span class="em">${P.puz[i]?"✅":"🧩"}</span><b>${p.n}</b><small>${i==dayP()?"⭐ Puzzle of the day":"White to move"}</small></div>`).join("")}
-function openP(i){const p=PZ[i];$("#plist").hidden=1;$("#pz").hidden=0;$("#pt").textContent="🧩 "+p.n+" — White to move";
-const Z={g:new Chess(p.f),el:$("#zb"),me:"w",onMove:m=>{
-if(m.from+m.to==p.a){Z.lock=1;if(!P.puz[i]){P.puz[i]=1;addXp(15)}say("#zc","🌟 Brilliant! That’s the move. +15 XP")}
-else{Z.g.undo();Z.last=null;draw(Z);say("#zc","Not quite. Hint: "+p.h+" Try again!")}}};
+const LVN=["Very Easy","Easy","Easy–Medium","Medium","Medium","Medium–Hard","Hard","Very Hard","Expert","Master"];
+const CAT={M1:["Checkmate in 1","Find the move that gives checkmate."],M2:["Checkmate in 2","Force checkmate in two moves."],M3:["Checkmate in 3","Force checkmate in three moves (look for checks!)."],CAP:["Capture a valuable piece","Which capture wins material safely?"],TACT:["Find the winning move","Find the move that wins material by force."],FORK:["Knight fork","Find the Knight move that attacks two pieces at once."],ENDG:["Endgame challenge","Find the strongest move in this endgame."]};
+const HINT={M:"Look for checks — which one leaves the King with nowhere to go?",C:"Look for an enemy piece nobody is protecting.",T:"Look for a move that attacks two things at once, or pins a piece.",E:"Think about what each piece can do — a quiet move may be strongest."};
+const solved=()=>PZ.filter((_,i)=>P.puz[i]).length,openP=i=>i==0||P.puz[i-1]||P.skip[i-1]||P.puz[i];
+let PL=0,Z;
+function showPuzzles(l){if(l!=null)PL=l;show("puz");$("#pz").hidden=1;$("#plist").hidden=0;const n=solved();
+$("#plist").innerHTML=`<h2 style="margin-top:0">Puzzle Arena</h2><p><b>${n} / 150 Puzzles Completed</b></p><div class="bar"><i style="width:${n/1.5}%"></i></div>
+<div class="row" style="justify-content:flex-start;margin-top:14px">${LVN.map((x,i)=>`<button class="s ${PL==i?"on":""}" onclick="showPuzzles(${i})">L${i+1}</button>`).join("")}</div>
+<h3>Level ${PL+1} · ${LVN[PL]} <span class="mut">(puzzles ${PL*15+1}–${PL*15+15})</span></h3>
+<div class="lv" style="grid-template-columns:repeat(5,1fr)">${Array.from({length:15},(_,k)=>{const i=PL*15+k,u=openP(i);return `<button class="lb ${P.puz[i]?"done":u?"cur":"lock"}" onclick="${u?`nav(showPuzzle,${i})`:""}">${u?i+1:"🔒"}<small>${P.puz[i]?"✓ solved":P.skip[i]?"skipped":""}</small></button>`}).join("")}</div>`}
+function pcat(i){return PZ[i][2]}
+function showPuzzle(i){show("puz");$("#plist").hidden=1;$("#pz").hidden=0;$("#znext").hidden=1;const[fen,sol,c]=PZ[i],s=sol.split(" "),n=c[0]=="M"?+c[1]:0;PL=Math.floor(i/15);
+$("#pt").textContent=`Puzzle ${i+1} · Level ${PL+1} · ${LVN[PL]}`;$("#pq").innerHTML=`<span class="badge y">${CAT[c][0]}</span> White to move. ${CAT[c][1]}`;
+Z={g:new Chess(fen),el:$("#zb"),me:"w",i,s,c,n,rem:n,h:0,
+bad:()=>say("#zc","That piece can’t move there (or it would leave your King in check). Tap a piece to see its legal moves."),
+onMove:m=>{const g=Z.g,u=m.from+m.to+(m.promotion||"");let ok,done=0;
+if(n){ok=g.in_checkmate()||(Z.rem>1&&!g.game_over()&&allr(g,Z.rem-1));if(ok&&!g.in_checkmate()){const[r,k]=defend(g,Z.rem-1);Z.lock=1;setTimeout(()=>{g.move(r);Z.last=r;Z.rem=k;Z.lock=0;draw(Z);say("#zc","Good! Black replied "+r.san+". Keep going — find the next forcing move.")},500);return}done=ok&&g.in_checkmate()}
+else{ok=u==s[0];done=ok}
+if(done){Z.lock=1;if(!P.puz[i]){P.puz[i]=1;addXp(5+PL*2)}save();const t=new Chess(fen),f=t.move({from:s[0].slice(0,2),to:s[0].slice(2,4),promotion:s[0][4]});
+say("#zc","🌟 Correct! "+(n?`${f.san} starts a forced checkmate — Black can’t escape every threat.`:`${f.san} wins material and Black can’t take it back.`)+` +${5+PL*2} XP`);$("#zc").classList.remove("pop");void $("#zc").offsetWidth;$("#zc").classList.add("pop");$("#znext").hidden=i>=149;$("#znext").textContent="Next puzzle →"}
+else{g.undo();Z.last=null;draw(Z);say("#zc",(n?"That doesn’t force checkmate — Black can defend. Look for checks that leave the King no escape.":"That move doesn’t win material by force — the opponent has a good answer.")+" Try again or tap Hint.")}}};
 draw(Z);say("#zc","Find the best move for White!")}
-/* ---------- profile / nav ---------- */
-function meDraw(){const dn=Object.keys(P.done).length,pz=Object.keys(P.puz).length,bt=Object.keys(P.beat).length;
-const bd=[["🎓 First lesson",dn>0],["🧩 Puzzle solver (3)",pz>=3],["🤖 Bot beater",bt>0],["⭐ Level 3",lvl()>=3],["🗺️ Academy graduate",dn==LS.length]];
-$("#prof").innerHTML=`<h2>My Progress</h2><p>Level ${lvl()} · ${P.xp} XP</p><div class="bar"><i style="width:${P.xp%100}%"></i></div>
-<p>Missions ${dn}/${LS.length} · Puzzles ${pz}/${PZ.length} · Bots beaten ${bt}/12</p>
-<h2>Board themes</h2><div class="row" style="justify-content:flex-start">${TH.map((t,i)=>{const u=P.xp>=t[3];return `<span class="tc" style="background:linear-gradient(90deg,${t[1]} 50%,${t[2]} 50%);color:#222;border-color:${P.theme==i?"#7c4dff":"transparent"};opacity:${u?1:.5}" onclick="${u?`th(${i});meDraw()`:""}">${u?"":"🔒 "}${t[0]}${u?"":" · "+t[3]+" XP"}</span>`}).join("")}</div>
-<h2>Achievements</h2><div class="grid">${bd.map(b=>`<div class="card soon" style="opacity:${b[1]?1:.4}">${b[1]?"🏅":"🔒"} ${b[0]}</div>`).join("")}</div><p><small>Unlock themes by earning XP — all free.</small></p>`}
-function daily(){const p=dayP();$("#daily").innerHTML=`<div class="card" onclick="go('puz');openP(${p})"><span class="em">🧩</span><b>Daily puzzle</b><small>${PZ[p].n} ${P.puz[p]?"✅":""}</small></div>
-<div class="card" onclick="quick()"><span class="em">🤖</span><b>Daily bot duel</b><small>Beat Baby Bot</small></div>
-<div class="card" onclick="go('learn')"><span class="em">🎯</span><b>Daily mission</b><small>Finish a lesson</small></div>`}
-const VS=[["home","Home"],["learn","Learn"],["play","Play Bots"],["puz","Puzzles"],["me","Profile"]];
-function go(v){document.querySelectorAll(".v").forEach(e=>e.hidden=e.id!=v);
-$("#nav").innerHTML=VS.map(x=>`<button class="${x[0]==v?"on":""}" onclick="go('${x[0]}')">${x[1]}</button>`).join("");
-if(v=="home")daily();if(v=="learn")mapDraw();if(v=="play")botsDraw();if(v=="puz")pzList();if(v=="me")meDraw();hud()}
-th(P.theme||0);go("home");
-Hh={g:new Chess(),el:$("#hb")};draw(Hh);
+function win(g,n){const chk=n>=3;for(const m of g.moves({verbose:true})){if(chk&&!/[+#]/.test(m.san))continue;g.move(m);const ok=g.in_checkmate()||(n>1&&!g.game_over()&&allr(g,n-1));g.undo();if(ok)return true}return false}
+function allr(g,n){for(const m of g.moves({verbose:true})){g.move(m);const ok=win(g,n);g.undo();if(!ok)return false}return true}
+function defend(g,n){let best=null,bk=0;for(const r of g.moves({verbose:true})){g.move(r);let k=1;while(k<n&&!win(g,k))k++;g.undo();if(k>bk){bk=k;best=r}}return[best,bk]}
+function zhint(){if(Z.lock)return;const c=Z.c;Z.h++;if(Z.h==1)say("#zc","💡 "+HINT[c[0]=="F"?"T":c[0]]);else{Z.sel=null;Z.star=Z.s[0].slice(0,2);draw(Z);say("#zc","💡 Look at the piece on the ★ — it plays the key move.")}}
+function zsol(){P.skip[Z.i]=1;save();Z.sel=null;Z.star=Z.s[0].slice(2,4);draw(Z);const t=new Chess(PZ[Z.i][0]),f=t.move({from:Z.s[0].slice(0,2),to:Z.s[0].slice(2,4),promotion:Z.s[0][4]});say("#zc","The key move is <b>"+f.san+"</b> (to the ★). Study it, then try again — or move on.");$("#znext").hidden=Z.i>=149;$("#znext").textContent="Skip to next →"}
+function zNext(){ST[ST.length-1]=[showPuzzle,[Z.i+1]];showPuzzle(Z.i+1)}
+/* ---------- profile ---------- */
+const dayP=()=>Math.floor(Date.now()/864e5)%150;
+function showMe(){show("me");const s=P.st,wp=s.g?Math.round(s.w/s.g*100):0,lc=Object.keys(PN).reduce((a,k)=>a+ldn(k),0),rat=Math.round(600+P.xp*1.5);
+const ach=[["🎓","First lesson",lc>0],["🧩","Puzzle solver (10)",solved()>=10],["🤖","Bot beater",cnt(P.beat)>0],["⭐","Level 5",lvl()>=5],["🏅","Rook Master",ldn("R")==10],["🏅","Knight Master",ldn("N")==10],["🔥","3-game win streak",s.b>=3],["🏆","Beat 6 bots",cnt(P.beat)>=6]];
+const fav=Object.entries(P.fav).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>G[x[0]]+" "+N[x[0]]+" ("+x[1]+")").join(" · ")||"Play games to find out";
+$("#me").innerHTML=`<div class="ph"><div class="av">${(P.name[0]||"P").toUpperCase()}</div><div style="flex:1"><h2 style="margin:0">${P.name.replace(/</g,"")}</h2><div class="mut">Level ${lvl()} · Est. rating ${rat} · Free member</div><div class="bar" style="max-width:260px;margin-top:6px"><i style="width:${P.xp%100}%"></i></div></div>
+<div><input id="nm" value="${P.name.replace(/"/g,"")}" maxlength="16" style="width:130px"> <button class="s" onclick="P.name=$('#nm').value||'Player';save();showMe()">Save name</button></div></div>
+<h2>Player statistics</h2><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr))">${[["Total games",s.g],["Won",s.w],["Lost",s.l],["Draws",s.d],["Win rate",wp+"%"],["Win streak",s.s],["Best streak",s.b],["Puzzles solved",solved()],["Lessons done",lc+"/60"],["Total XP",P.xp]].map(x=>`<div class="tile"><b>${x[1]}</b><span>${x[0]}</span></div>`).join("")}</div>
+<h2>Learning progress</h2><div class="grid">${["R","B","N","Q","K","P"].map(k=>`<div class="tile"><span>${PI[k]} ${PN[k]}</span><div class="bar" style="margin:6px 0"><i style="width:${ldn(k)*10}%"></i></div><span>${ldn(k)}/10</span></div>`).join("")}</div>
+<h2>Puzzle progress</h2><p>${solved()} / 150 Puzzles Completed</p><div class="bar"><i style="width:${solved()/1.5}%"></i></div>
+<h2>Achievements</h2><div class="grid">${ach.map(a=>`<div class="tile" style="opacity:${a[2]?1:.4}">${a[2]?a[0]:"🔒"} ${a[1]}</div>`).join("")}</div>
+<h2>Bot victories</h2><p>${BOTS.map((b,i)=>P.beat[i]?b[1]+" "+b[0]:"").filter(Boolean).join(" · ")||"No bots beaten yet"}</p><p class="mut">Favourite pieces: ${fav}</p>
+<h2>Game history</h2>${P.hist.length?`<table><tr><th>Opponent</th><th>Result</th><th>Moves</th><th>Date</th></tr>${P.hist.slice(0,8).map(h=>`<tr><td>${BOTS[h.b][1]} ${BOTS[h.b][0]}</td><td>${{w:"Win",l:"Loss",d:"Draw"}[h.r]}</td><td>${h.m}</td><td>${new Date(h.d).toLocaleDateString()}</td></tr>`).join("")}</table>`:`<p class="mut">No games yet.</p>`}
+<h2>Board themes</h2><div class="row" style="justify-content:flex-start">${TH.map((t,i)=>{const u=P.xp>=t[3];return `<button class="s ${P.theme==i?"on":""}" style="opacity:${u?1:.5};background:linear-gradient(90deg,${t[1]} 50%,${t[2]} 50%);color:#222" onclick="${u?`th(${i});showMe()`:""}">${u?"":"🔒 "}${t[0]}${u?"":" · "+t[3]+" XP"}</button>`}).join("")}</div>
+<h2>Settings &amp; privacy</h2><p>Move warnings in bot games: <select onchange="P.warn=this.value;save()"><option value="none" ${P.warn=="none"?"selected":""}>No warnings</option><option value="imp" ${P.warn=="imp"?"selected":""}>Important warnings only</option><option value="hints" ${P.warn=="hints"?"selected":""}>Beginner learning hints</option></select></p>
+<p class="mut">Privacy: all progress is stored only on this device. <button class="lk" onclick="if(P._c){localStorage.removeItem('cw2');location.reload()}else{P._c=1;this.textContent='Tap again to erase all progress'}">Reset all progress</button></p>`}
+/* ---------- home ---------- */
+function showHome(){show("home");const p=dayP(),nx=["R","B","N","Q","K","P"].find(k=>ldn(k)<10)||"R";
+$("#home").innerHTML=`<div class="hero"><div><span class="badge y">LEARN • PLAY • CHALLENGE • MASTER</span><h1>Every Move Begins an Adventure.</h1><p class="mut" style="font-size:1.1rem">Learn chess from zero, play characters that think back, and sharpen your eye with 150 puzzles.</p>
+<button class="b" onclick="go(showBots)">▶ Play Now</button><button class="b o" onclick="go(showLearn)">📖 Learn Chess</button></div><div><div id="hb" class="board sm"></div></div></div>
+<h2>Start here</h2><div class="grid"><div class="card" onclick="go(showBots)"><span class="em">♟️</span><b>Play Chess</b><small>Pick a bot, choose your colour</small></div><div class="card" onclick="go(showLearn)"><span class="em">📖</span><b>Learn Chess</b><small>60 hands-on lessons</small></div><div class="card" onclick="go(showBots)"><span class="em">🤖</span><b>Challenge a Bot</b><small>12 personalities</small></div><div class="card" onclick="go(showPuzzles)"><span class="em">🧩</span><b>Puzzle Arena</b><small>${solved()} / 150 solved</small></div></div>
+<h2>Daily challenges</h2><div class="grid"><div class="card" onclick="go(showPuzzles);nav(showPuzzle,${p})"><b>🧩 Puzzle of the day</b><small>#${p+1} · ${CAT[PZ[p][2]][0]} ${P.puz[p]?"✓":""}</small></div><div class="card" onclick="go(showBots)"><b>🤖 Bot duel</b><small>Beat a bot today</small></div><div class="card" onclick="go(showLearn);nav(showJourney,'${nx}')"><b>🎯 Daily mission</b><small>Continue the ${PN[nx]} journey</small></div></div>
+<h2>Popular bots</h2><div class="grid">${[0,1,5,10].map(i=>`<div class="card" onclick="go(showBots);PK=${i};showBots()"><span class="em">${BOTS[i][1]}</span><b>${BOTS[i][0]}</b><small>${BOTS[i][5]} · ~${BOTS[i][2]}</small></div>`).join("")}</div>
+<h2>Your learning journey</h2><div class="grid">${["R","B","N","Q","K","P"].map(k=>`<div class="card" onclick="go(showLearn);nav(showJourney,'${k}')"><span class="em">${PI[k]}</span><b>${PN[k]}</b><div class="bar"><i style="width:${ldn(k)*10}%"></i></div></div>`).join("")}</div>
+<h2>Achievements</h2><p class="mut">Level ${lvl()} · ${cnt(P.beat)} bots beaten · ${solved()} puzzles solved. <button class="lk" onclick="go(showMe)">See profile</button></p>`;
+HB=HB||{g:new Chess()};HB.el=$("#hb");draw(HB)}
+/* init */
+{const t=document.documentElement;if(P.mode)t.dataset.theme=P.mode;th(P.theme||0);go(showHome)}
 </script></body></html>
